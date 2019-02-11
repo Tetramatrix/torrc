@@ -11,7 +11,9 @@ body {
     height:100%;
     -webkit-box-sizing: border-box;
        -moz-box-sizing: border-box;
-            box-sizing: border-box;             
+            box-sizing: border-box;
+    padding:0px;
+    margin:0px;             
 }
 
 .button {
@@ -100,7 +102,8 @@ body {
   -ms-overflow-style: none;  // IE 10+
   overflow: -moz-scrollbars-none;  // Firefox
   touch-action: none;
-  -ms-touch-action:none
+  -ms-touch-action:none;
+  margin:0px;  
 }
 
 .slider-wrap::-webkit-scrollbar { 
@@ -125,7 +128,11 @@ body {
   -ms-overflow-style: none;  // IE 10+
   overflow: -moz-scrollbars-none;  // Firefox
   touch-action: none;
-  -ms-touch-action:none
+  -ms-touch-action:none;
+  margin:0px;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 .product-wrap::-webkit-scrollbar { 

@@ -62,6 +62,7 @@ $( document ).ready(function() {
 			
 		} else {
 
+			/*
 			$(".slider-wrap").on('touchstart mousedown', function(e){
 
 			  const firstTouch = getTouch(e);
@@ -114,7 +115,7 @@ $( document ).ready(function() {
 			    }
 			  }
 			});
-
+			*/
 
 	   $(".product").on('touchstart mousedown', function(e){
 
@@ -162,8 +163,16 @@ $( document ).ready(function() {
 			    }, 1000);
 			      
 			    } else {
-			      console.log('pdown');			      
-			      
+			      		console.log('pdown');	
+			      		$("#slider-wrap").removeClass("hidden").addClass("shown");	
+			      	  $(this).animate({
+			        		'marginTop' : "+=1000px" //moves down
+			    				}, 1000, "swing",function() {
+    								// Animation complete.
+    								$(this).removeAttr('style');
+    								$("#product-wrap").removeClass("shown").addClass("hidden");
+ 										 										
+ 								 });
 			    }
 			  }
 			  });
@@ -171,6 +180,7 @@ $( document ).ready(function() {
 			
 			$(".button").on("click", function(){ 
 				$("#product-wrap").removeClass("hidden").addClass("shown");
+				$("#slider-wrap").removeClass("shown").addClass("hidden");
 			});
 			
 			function getTouch (e) {
