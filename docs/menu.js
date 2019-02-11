@@ -4,6 +4,93 @@ const offset = 100;
 let xDown, yDown;
 let xpDown, ypDown;
 
+function getTouch (e) {
+				if (e!==undefined && e.changedTouches!==undefined) {
+					return e.changedTouches[0];	
+				}
+			  return false;
+			}
+			
+function touchfinal(e) {
+				
+				if (!xpDown || !ypDown) {
+			    return;
+			  }
+			  
+				e.preventDefault();
+				$('.product').off('click');
+				
+			  const {
+			    clientX: xpUp,
+			    clientY: ypUp
+			  } = getTouch(e);
+			  
+			  const xpDiff = xpDown - xpUp;
+			  const ypDiff = ypDown - ypUp;
+			  const xpDiffAbs = Math.abs(xpDown - xpUp);
+			  const ypDiffAbs = Math.abs(ypDown - ypUp);
+
+			  // at least <offset> are a swipe
+			  if (Math.max(xpDiffAbs, ypDiffAbs) < offset ) {
+			    return;
+			  }
+
+			  if (xpDiffAbs > ypDiffAbs) {
+			    if ( xpDiff > 0 ) {
+			    	
+			      console.log('pleft');
+			      console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
+			       if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-3*427)) {
+			       	$('#productslider').animate({
+			      	 'marginLeft' : "-=427px" //moves left
+			    		}, 1000, function () {
+				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<(-3*427)) {
+								  	//alert("test");
+								  	$('#productslider').removeAttr('style');
+								  }
+				    		});	
+			       }						 
+			    
+			    } else {
+			      	console.log('pright');
+			        console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
+			        if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<0) {
+							 $('#productslider').animate({
+				        'marginLeft' : "+=427px" //moves right
+				    		}, 1000, function () {
+				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>0) {
+								  	//alert("test");
+								  	$('#productslider').removeAttr('style');
+								  }
+				    		});
+				     }
+			    }
+			  } else {
+			    if ( ypDiff > 0 ) {
+			      console.log('pup');
+			      $(this).animate({
+			        'marginTop' : "-=1000px" //moves up
+			    }, 1000);
+			      
+			    } else {
+			      		console.log('pdown');	
+			      		$("#slider-wrap").removeClass("hidden").addClass("shown");	
+			      	  $(this).animate({
+			        		'marginTop' : "+=1000px" //moves down
+			    				}, 1000, "swing",function() {
+    								// Animation complete.
+    								$(this).removeAttr('style');
+    								$("#product-wrap").removeClass("shown").addClass("hidden");
+ 										 										
+ 								 });
+			    }
+			  }
+			  
+			  if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>0) {
+			  	//alert("test");
+			  	$('#productslider').removeAttr('style');
+			  }
+}
 
 $( document ).ready(function() {
 	
@@ -41,9 +128,10 @@ $( document ).ready(function() {
 			  if (xDiffAbs > yDiffAbs) {
 			    if ( xDiff > 0 ) {
 			      console.log('left');
+			      
 			      $('#slider-wrap').animate({
 			        slider: '-=153'
-			    }, 1000, 'easeOutQuad');
+			    	}, 1000, 'easeOutQuad');
 			    
 			    } else {
 			      console.log('right');
@@ -119,6 +207,8 @@ $( document ).ready(function() {
 
 	   $(".product").on('touchstart mousedown', function(e){
 
+				e.preventDefault();
+				
 			  const firstTouch = getTouch(e);
 
 			  xpDown = firstTouch.clientX;
@@ -126,56 +216,9 @@ $( document ).ready(function() {
 			});
 			
 			
-			$(".product").on('touchend mouseup', function(e){
-			  if (!xpDown || !ypDown) {
-			    return;
-			  }
+			$(".product").on('touchend mouseup', touchfinal);
+				
 
-			  const {
-			    clientX: xpUp,
-			    clientY: ypUp
-			  } = getTouch(e);
-			  const xpDiff = xpDown - xpUp;
-			  const ypDiff = ypDown - ypUp;
-			  const xpDiffAbs = Math.abs(xpDown - xpUp);
-			  const ypDiffAbs = Math.abs(ypDown - ypUp);
-
-			  // at least <offset> are a swipe
-			  if (Math.max(xpDiffAbs, ypDiffAbs) < offset ) {
-			    return;
-			  }
-
-
-			  if (xpDiffAbs > ypDiffAbs) {
-			    if ( xpDiff > 0 ) {
-			      console.log('pleft');
-			    
-			    
-			    } else {
-			      console.log('pright');
-
-			    }
-			  } else {
-			    if ( ypDiff > 0 ) {
-			      console.log('pup');
-			      $(this).animate({
-			        'marginTop' : "-=1000px" //moves up
-			    }, 1000);
-			      
-			    } else {
-			      		console.log('pdown');	
-			      		$("#slider-wrap").removeClass("hidden").addClass("shown");	
-			      	  $(this).animate({
-			        		'marginTop' : "+=1000px" //moves down
-			    				}, 1000, "swing",function() {
-    								// Animation complete.
-    								$(this).removeAttr('style');
-    								$("#product-wrap").removeClass("shown").addClass("hidden");
- 										 										
- 								 });
-			    }
-			  }
-			  });
 			
 			
 			$(".button").on("click", function(){ 
@@ -183,12 +226,7 @@ $( document ).ready(function() {
 				$("#slider-wrap").removeClass("shown").addClass("hidden");
 			});
 			
-			function getTouch (e) {
-				if (e!==undefined && e.changedTouches!==undefined) {
-					return e.changedTouches[0];	
-				}
-			  return false;
-			}
+			
 			
 		}
 
