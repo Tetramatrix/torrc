@@ -18,41 +18,46 @@ body {
   background-color: #4CAF50;
   border: none;
   color: white;
-  padding: 50px;
+  padding: 36px;
   text-align: center;
   text-decoration: none;
   display: inline-block;
   font-size: 16px;
-  margin: 4px 2px;
+  margin: 4px 3px;
 }
 
 .button1 {border-radius: 0;
-				  padding:150;
+				  padding:200;
+				  padding-bottom:700px;
 }
 
-
 .button1r {border-radius: 0;
-				  padding:150;
+				  padding:200;
+				  padding-bottom:700px;
 			  	background-color: red;
 }
 
 .button1b {border-radius: 0;
-				  padding:150;
+				  padding:200;
+				  padding-bottom:700px;
 				  background-color: blue;
 }
 
 .button1y {border-radius: 0;
-				  padding:150;
+				  padding:200;
+				  padding-bottom:700px;
 				  background-color: yellow;
 }
 
 .button1p {border-radius: 0;
-				  padding:150;
+				  padding:200;
+				  padding-bottom:700px;
 				  background-color: pink;
 }
 
 .button1br {border-radius: 0;
-				  padding:150;
+				  padding:200;
+				  padding-bottom:700px;
 				  background-color: brown;
 }
 
@@ -89,7 +94,7 @@ body {
 
 .slider-wrap {
 	width: 400px;
-  height: 150px;
+  height: 105px;
   overflow-x: auto;
   overflow-y: hidden;
   -ms-overflow-style: none;  // IE 10+
@@ -104,7 +109,7 @@ body {
 
 .slider {
 	width: 1000px;
-  height: 150px;
+  height: 105px;
 }
 
 .slide-wrapper {
@@ -114,7 +119,7 @@ body {
 
 .product-wrap {
 	width: 400px;
-  height: 450px;
+  height: 100%;
   overflow-x: auto;
   overflow-y: hidden;
   -ms-overflow-style: none;  // IE 10+
@@ -129,7 +134,7 @@ body {
 
 .productslider {
 	width: 2000px;
-  height: 450px;
+  height: 100%;
 }
 
 .product-wrapper {	
