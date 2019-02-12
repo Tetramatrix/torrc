@@ -19,6 +19,7 @@ function touchfinal(e) {
 			  
 				e.preventDefault();
 				$('.product').off('click');
+				$('.product').prop('onclick', null);
 				
 			  const {
 			    clientX: xpUp,
@@ -36,15 +37,18 @@ function touchfinal(e) {
 			  }
 
 			  if (xpDiffAbs > ypDiffAbs) {
+			    
 			    if ( xpDiff > 0 ) {
 			    	
 			      console.log('pleft');
+			      
 			      console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
-			       if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-3*427)) {
+			       if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-3*428)) {
 			       	$('#productslider').animate({
 			      	 'marginLeft' : "-=427px" //moves left
 			    		}, 1000, function () {
-				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<(-3*427)) {
+				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<(-3*428)) {
+								  	// Animation complete.
 								  	//alert("test");
 								  	$('#productslider').removeAttr('style');
 								  }
@@ -59,6 +63,7 @@ function touchfinal(e) {
 				        'marginLeft' : "+=427px" //moves right
 				    		}, 1000, function () {
 				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>0) {
+				    			 	//Animation complete.
 								  	//alert("test");
 								  	$('#productslider').removeAttr('style');
 								  }
@@ -80,8 +85,7 @@ function touchfinal(e) {
 			    				}, 1000, "swing",function() {
     								// Animation complete.
     								$(this).removeAttr('style');
-    								$("#product-wrap").removeClass("shown").addClass("hidden");
- 										 										
+    								$("#product-wrap").removeClass("shown").addClass("hidden"); 										 										
  								 });
 			    }
 			  }
@@ -150,84 +154,23 @@ $( document ).ready(function() {
 			
 		} else {
 
-			/*
-			$(".slider-wrap").on('touchstart mousedown', function(e){
-
-			  const firstTouch = getTouch(e);
-
-			  xDown = firstTouch.clientX;
-			  yDown = firstTouch.clientY;
-			});
-
-			$(".slider-wrap").on('touchend mouseup', function(e){
-			  if (!xDown || !yDown) {
-			    return;
-			  }
-
-			  const {
-			    clientX: xUp,
-			    clientY: yUp
-			  } = getTouch(e);
-			  const xDiff = xDown - xUp;
-			  const yDiff = yDown - yUp;
-			  const xDiffAbs = Math.abs(xDown - xUp);
-			  const yDiffAbs = Math.abs(yDown - yUp);
-
-			  // at least <offset> are a swipe
-			  if (Math.max(xDiffAbs, yDiffAbs) < offset ) {
-			    return;
-			  }
-
-
-			  if (xDiffAbs > yDiffAbs) {
-			    if ( xDiff > 0 ) {
-			      console.log('left');
-			      $('#slider-wrap').animate({
-			        slider: '-=153'
-			    }, 1000, 'easeOutQuad');
-			    
-			    } else {
-			      console.log('right');
-			       $('#slider-wrap').animate({
-			        slider: '+=153'
-			    }, 1000, 'easeOutQuad');
-			    }
-			  } else {
-			    if ( yDiff > 0 ) {
-			      console.log('up');
-			      
-			      
-			    } else {
-			      console.log('down');			      
-			      
-			    }
-			  }
-			});
-			*/
-
-	   $(".product").on('touchstart mousedown', function(e){
+			$(".product").on('touchstart mousedown', function(e){
 
 				e.preventDefault();
-				
-			  const firstTouch = getTouch(e);
 
-			  xpDown = firstTouch.clientX;
-			  ypDown = firstTouch.clientY;
+				const firstTouch = getTouch(e);
+
+				xpDown = firstTouch.clientX;
+				ypDown = firstTouch.clientY;
 			});
 			
 			
 			$(".product").on('touchend mouseup', touchfinal);
-				
-
-			
-			
+							
 			$(".button").on("click", function(){ 
 				$("#product-wrap").removeClass("hidden").addClass("shown");
 				$("#slider-wrap").removeClass("shown").addClass("hidden");
 			});
-			
-			
-			
 		}
 
 });

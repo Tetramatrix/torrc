@@ -1,32 +1,45 @@
+*{
+			  padding:0;
+			  margin:0;
+			  border-width: 0px;
+}
+
+*, *:before, *:after {
+  		box-sizing: border-box;
+}
+
 html, body {
-  overflow-x: hidden;
-  touch-action: none;
-  -ms-touch-action:none;
+			  overflow-x: hidden;
+			  touch-action: none;
+			  -ms-touch-action:none;
+			  margin:0px;
+			  padding:0;
+			   overflow: hidden;
 }
 
 body {
-  position: relative;
-   overflow: hidden;
-    width: 100%;
-    height:100%;
-    -webkit-box-sizing: border-box;
-       -moz-box-sizing: border-box;
-            box-sizing: border-box;
-    padding:0px;
-    margin:0px;      
-    border: none !important;       
+			  position: relative;
+			   overflow: hidden;
+			    width: 100%;
+			    height:100%;
+			    -webkit-box-sizing: border-box;
+			       -moz-box-sizing: border-box;
+			            box-sizing: border-box;
+			    padding:0px;
+			    margin:0px;      
+			    border: none !important;       
 }
 
 .button {
-  background-color: #4CAF50;
-  border: none;
-  color: white;
-  padding: 36px;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 16px;
-  margin: 4px 3px;
+				  background-color: #4CAF50;
+				  border: none;
+				  color: white;
+				  padding: 36px;
+				  text-align: center;
+				  text-decoration: none;
+				  display: inline-block;
+				  font-size: 16px;
+				  margin: 4px 3px;
 }
 
 .button1 {border-radius: 0;
@@ -96,7 +109,7 @@ body {
 
 
 .slider-wrap {
-	width: 400px;
+	width: 411px;
   height: 105px;
   overflow-x: auto;
   overflow-y: hidden;
@@ -117,13 +130,16 @@ body {
   height: 105px;
 }
 
-.slide-wrapper {
+.slide {
 	float:left;	
-	display: inline-block;
+	//display: inline-block;
+  margin-left:-3px;
+  margin-top:-2px;
+  padding:0px;
 }
 
 .product-wrap {
-	width: 400px;
+	width: 411px;
   height: 100%;
   overflow-x: hidden;
   overflow-y: hidden;
@@ -148,9 +164,12 @@ body {
   position:relative;
 }
 
-.product-wrapper {	
+.product {	
 	float:left;	
 	display: inline-block;
+  margin-left:-3px;
+  margin-top:-5px;
+  padding:0px;
 }
 
 .animate { transition: transform 0.3s ease-out; }
