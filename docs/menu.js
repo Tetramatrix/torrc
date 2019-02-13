@@ -4,12 +4,10 @@ const offset = 100;
 const wwidth = $(window).width();
 const poffsetw = 0;
 const poffsett = 0;
-const products = 7;
 
-let xDown, yDown, xpDown, ypDown, xsDown, ysDown;
+let xDown, yDown;
+let xpDown, ypDown;
 
-//$("#product").css({"width":wwidth});
-	
 function getTouch (e) {
 				if (e!==undefined && e.changedTouches!==undefined) {
 					return e.changedTouches[0];	
@@ -50,11 +48,11 @@ function touchfinalp(e) {
 			      console.log('pleft');			      
 			      console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
 			      
-			      if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-products*wwidth)) {
+			      if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-3*wwidth)) {
 			       	$('#productslider').animate({
 			      	 'marginLeft' : "-="+wwidth //moves left
 			    		}, 1000, function () {
-				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<(-products*wwidth)) {
+				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<(-3*wwidth)) {
 								  	// Animation complete.
 								  	//alert("test");
 								  	$('#productslider').removeAttr('style');
@@ -111,20 +109,57 @@ $( document ).ready(function() {
 		if (navigator.maxTouchPoints==0) {
 			
 			$(".slider-wrap").css('-ms-touch-action', 'none');
+
+			document.addEventListener('pointerdown', e => {
+			 
+			  xDown = e.x ;
+			  yDown = e.y;
+			     
+			});
+
+			document.addEventListener('pointerup', e => {
+			  if (!xDown || !yDown) {
+			    return;
+			  }
+
+			  xUp = e.x;
+			  yUp = e.y;
+			  
+			  const xDiff = xDown - xUp;
+			  const yDiff = yDown - yUp;
+			  const xDiffAbs = Math.abs(xDown - xUp);
+			  const yDiffAbs = Math.abs(yDown - yUp);
+
+			  // at least <offset> are a swipe
+			  if (Math.max(xDiffAbs, yDiffAbs) < offset ) {
+			    return;
+			  }
+
+			  if (xDiffAbs > yDiffAbs) {
+			    if ( xDiff > 0 ) {
+			      console.log('left');
+			      
+			      $('#slider-wrap').animate({
+			        slider: '-=153'
+			    	}, 1000, 'easeOutQuad');
+			    
+			    } else {
+			      console.log('right');
+			       $('#slider-wrap').animate({
+			        slider: '+=153'
+			    }, 1000, 'easeOutQuad');
+			    }
+			  } else {
+			    if ( yDiff > 0 ) {
+			      console.log('up');
+			    } else {
+			      console.log('down');
+			    }
+			  }
+			});	
 			
 		} else {		
 			
-			
-			$("body").on('touchstart mousedown', function(e){
-
-				e.preventDefault();
-
-				const firstTouch = getTouch(e);
-
-				xsDown = firstTouch.clientX;
-				ysDown = firstTouch.clientY;
-			});
-						
 			$(".product").on('touchstart mousedown', function(e){
 
 				e.preventDefault();
@@ -138,98 +173,59 @@ $( document ).ready(function() {
 			
 			$(".product").on('touchend mouseup', touchfinalp);
 							
-			$(".button").on("touchend mouseup", function(e){ 
+			$(".button").on("touchend click", function(){ 
 				
-				e.preventDefault();
-				
-  			const {
-			    clientX: xsUp,
-			    clientY: ysUp
-			  } = getTouch(e);
-			  
-			  const xsDiff = xsDown - xsUp;
-			  const ysDiff = ysDown - ysUp;
-			  const xsDiffAbs = Math.abs(xsDown - xsUp);
-			  const ysDiffAbs = Math.abs(ysDown - ysUp);
-			  
-			  if (Math.max(xsDiffAbs, ysDiffAbs) < 10 ) {
-			  
-			  		$('.img').each(function(i, item) {
-					    var img_height = $(item).height();
-					    var div_height = $(item).parent().parent().parent().height();
-					    var div_width = $(item).parent().parent().parent().width();
-					    if(img_height<div_height){
-					        //IMAGE IS SHORTER THAN CONTAINER HEIGHT - CENTER IT VERTICALLY
-					        var newMargin = (div_height-img_height)/2+'px';
-					        $(item).css({'margin-top': newMargin });
-					    }
-					    /*else if(img_height>div_height){
-					        //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE HEIGHT TO CONTAINER MAX - SET WIDTH TO AUTO  
-					        $(item).css({'width': 'auto', 'height': '103%'});
-					        //CENTER IT HORIZONTALLY
-					        var img_width = $(item).width();
-					        var div_width = $(item).parent().width();
-						   }
-						   */
-						   if ($(item).width()>div_width && $(item).height()>div_height) {
-						   	
-						   		var canvas = document.createElement('canvas');
-							    canvas.width=div_width+poffsetw;
-							    canvas.height=div_height;
-							    ctx = canvas.getContext('2d');
-							    //Draw Canvas Fill mode
-								  ctx.fillStyle = 'white';
-									ctx.fillRect(0,0,canvas.width, canvas.height);
-									var newMarginL = Math.round(($(item).width()-div_width)/2);
-									var newMarginT = Math.round((img_height-div_height)/2);
+				$('.img').each(function(i, item) {
+			    var img_height = $(item).height();
+			    var div_height = $(item).parent().parent().parent().height();
+			    var div_width = $(item).parent().parent().parent().width();
+			    if(img_height<div_height){
+			        //IMAGE IS SHORTER THAN CONTAINER HEIGHT - CENTER IT VERTICALLY
+			        var newMargin = (div_height-img_height)/2+'px';
+			        $(item).css({'margin-top': newMargin });
+			    }
+			    /*else if(img_height>div_height){
+			        //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE HEIGHT TO CONTAINER MAX - SET WIDTH TO AUTO  
+			        $(item).css({'width': 'auto', 'height': '103%'});
+			        //CENTER IT HORIZONTALLY
+			        var img_width = $(item).width();
+			        var div_width = $(item).parent().width();
+				   }
+				   */
+				   if ($(item).width()>div_width) {
+					    var canvas = document.createElement('canvas');
+					    canvas.width=div_width+poffsetw;
+					    canvas.height=div_height;
+					    ctx = canvas.getContext('2d');
+					    //Draw Canvas Fill mode
+						  ctx.fillStyle = 'white';
+							ctx.fillRect(0,0,canvas.width, canvas.height);
 
-									ctx.drawImage(item,newMarginL,newMarginT,div_width,div_height,0,0,div_width,div_height);
-									console.log(canvas.toDataURL('image/jpeg'));
-									item.src = canvas.toDataURL('image/jpeg');
-						   	
-						   	
-						   } else {
-						   	
-						   	 if ($(item).width()>div_width) {
-							    var canvas = document.createElement('canvas');
-							    canvas.width=div_width+poffsetw;
-							    canvas.height=div_height;
-							    ctx = canvas.getContext('2d');
-							    //Draw Canvas Fill mode
-								  ctx.fillStyle = 'white';
-									ctx.fillRect(0,0,canvas.width, canvas.height);
-									var newMarginL = (div_width-$(item).width())/2+'px';
-									var newMarginT = (div_height-img_height)/2;
+							ctx.drawImage(item,0,0,div_width+poffsetw,img_height);
+							console.log(canvas.toDataURL('image/jpeg'));
+							item.src = canvas.toDataURL('image/jpeg');
+				   }
+				   
+				   if ($(item).width()<div_width) {
+					    var canvas = document.createElement('canvas');
+					    canvas.width=div_width+poffsetw;
+					    canvas.height=div_height;
+					    ctx = canvas.getContext('2d');
+					    
+					      //Draw Canvas Fill mode
+						  ctx.fillStyle = 'white';
+							ctx.fillRect(0,0,canvas.width, canvas.height);
+							
+							ctx.drawImage(item,0,0,div_width+poffsetw,img_height,0,0,div_width,div_height);
+							console.log(canvas.toDataURL('image/jpeg'));
+							item.src = canvas.toDataURL('image/jpeg');
+				   }
+				   
+				   
+				});
 
-									ctx.drawImage(item,0,0,div_width+poffsetw,img_height,0,0,div_width,img_height);
-									console.log(canvas.toDataURL('image/jpeg'));
-									item.src = canvas.toDataURL('image/jpeg');
-							   }
-							   
-							   if ($(item).width()<div_width) {
-								    var canvas = document.createElement('canvas');
-								    canvas.width=div_width+poffsetw;
-								    canvas.height=div_height;
-								    ctx = canvas.getContext('2d');
-								    
-								      //Draw Canvas Fill mode
-									  ctx.fillStyle = 'white';
-										ctx.fillRect(0,0,canvas.width, canvas.height);
-										
-										var newMarginL = (div_width-$(item).width())/2;
-										var newMarginT = (div_height-img_height)/2;
-										
-										ctx.drawImage(item,0,0,div_width+poffsetw,img_height,newMarginL,0,div_width,img_height);
-										console.log(canvas.toDataURL('image/jpeg'));
-										item.src = canvas.toDataURL('image/jpeg');
-					   			}
-						   }	
-						});
-
-						$("#product-wrap").removeClass("hidden").addClass("shown");
-						$("#slider-wrap").removeClass("shown").addClass("hidden");
-			  }			  
-			
+				$("#product-wrap").removeClass("hidden").addClass("shown");
+				$("#slider-wrap").removeClass("shown").addClass("hidden");
 			});
 		}
 
