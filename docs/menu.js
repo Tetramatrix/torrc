@@ -2,6 +2,7 @@
 // you can use the value relative to screen size: window.innerWidth * .1
 const offset = 100;
 const wwidth = $(window).width();
+var wheight = 0;
 const poffsetw = 0;
 const poffsett = 0;
 const products = 7;
@@ -12,9 +13,35 @@ var categories  = { "cat1" : [ "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg"
 "cat5" : [ "fasion-15.jpg", "fasion-14.jpg","fashion-02.jpg", "fashion-09.jpg", "fashion-05-726x1024.jpg","fashion-10.jpg", "fashion-11.jpg", "fasion-13.jpg" ],
 "cat6" : [ "fashion-11.jpg", "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg", "fashion-09.jpg", "fashion-05-726x1024.jpg","fashion-10.jpg","fasion-13.jpg" ]
  };
-
+var loaded  = { "cat1" : "0" ,
+"cat2" : "0" ,
+"cat3" : "0" ,
+"cat4" : "0" ,
+"cat5" : "0" ,
+"cat6" : "0" 
+ };
+var interval = 0; 
 let xDown, yDown, xpDown, ypDown, xsDown, ysDown;
-							  
+							 
+function autosscroll() {
+	console.log("autoscroll");
+	if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-products*wwidth)) {
+	 	$('#productslider').animate({
+		 'marginLeft' : "-="+wwidth //moves left
+		}, 500, function () {
+				 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<=(-products*wwidth)) {
+			  	// Animation complete.
+			  	//alert("test");
+			  	$('#productslider').removeAttr('style');
+			  }
+			});	
+ 	}
+ 	if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>0) {
+  	//alert("test");
+  	$('#productslider').removeAttr('style');
+  }
+}
+
 function getTouch (e) {
 	if (e!==undefined && e.changedTouches!==undefined) {
 		return e.changedTouches[0];	
@@ -58,7 +85,7 @@ function touchfinalp(e) {
 			       	$('#productslider').animate({
 			      	 'marginLeft' : "-="+wwidth //moves left
 			    		}, 500, function () {
-				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<(-products*wwidth)) {
+				    			 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<=(-products*wwidth)) {
 								  	// Animation complete.
 								  	//alert("test");
 								  	$('#productslider').removeAttr('style');
@@ -91,6 +118,7 @@ function touchfinalp(e) {
 									  'marginTop' : "-=1000px" //moves up
 									}, 500, "swing",function() {
 										// Animation complete.
+										clearInterval(interval);
 										$(this).removeAttr('style');
 										//$("#product-wrap").removeClass("shown").addClass("hidden");
 										//$("#slider-wrap").removeClass("hidden").addClass("shown");											
@@ -103,9 +131,11 @@ function touchfinalp(e) {
 					        		'marginTop' : "+=1000px" //moves down
 					    				}, 500, "swing",function() {
 		    								// Animation complete.
+		    								clearInterval(interval);
 		    								$(this).removeAttr('style');
 		    								$("#product-wrap").removeClass("shown").addClass("hidden"); 	
-		    								$("#slider-wrap").removeClass("hidden").addClass("shown");										 										
+		    								$("#slider-wrap").removeClass("hidden").addClass("shown");
+		    								$("#close").removeClass("shown").addClass("hidden");										 										
 		 								 });
 					    }
 			  }
@@ -119,21 +149,33 @@ function touchfinalp(e) {
 $( document ).ready(function() {
 	
     console.log( "ready!" );
-
+		wheight = $('#imenu').height();
+		
 		if (navigator.maxTouchPoints==0) {
 			
 			$(".slider-wrap").css('-ms-touch-action', 'none');
 			
 		} else {		
 			
+			$(".close").on('touchend mouseup', function(e){
+
+					e.preventDefault();
+					
+					clearInterval(interval);
+					$("#product-wrap").removeClass("shown").addClass("hidden"); 	
+					$("#slider-wrap").removeClass("hidden").addClass("shown");
+					$("#close").removeClass("shown").addClass("hidden");		
+
+			});			
+			
 			$(".product").on('touchstart mousedown', function(e){
 
-								e.preventDefault();
+						e.preventDefault();
 
-								const firstTouch = getTouch(e);
+						const firstTouch = getTouch(e);
 
-								xpDown = firstTouch.clientX;
-								ypDown = firstTouch.clientY;
+						xpDown = firstTouch.clientX;
+						ypDown = firstTouch.clientY;
 			});			
 							
 			$("body").on('touchstart mousedown', function(e){
@@ -234,13 +276,11 @@ $( document ).ready(function() {
 							});			
 			
 						$(".product").on('touchend mouseup', touchfinalp);
-
-
-			  		$('.img').each(function(i, item) {
-			  			
+			
+			  		$('.img').each(function(i, item) {			  			
 			  			 $(item).on('load', function() {
 			  			 		
-			  			 		 var img_height = $(item).height();
+			  			 		var img_height = $(item).height();
 							    var div_height = $(item).parent().parent().parent().height();
 							    var div_width = $(item).parent().parent().parent().width();
 					    
@@ -271,8 +311,7 @@ $( document ).ready(function() {
 
 										ctx.drawImage(item,newMarginL,newMarginT,div_width,div_height,0,0,div_width,div_height);
 										console.log(canvas.toDataURL('image/jpeg'));
-										item.src = canvas.toDataURL('image/jpeg');
-							   	
+										item.src = canvas.toDataURL('image/jpeg');							   	
 							   	
 							   } else {
 							   	
@@ -310,12 +349,16 @@ $( document ).ready(function() {
 											item.src = canvas.toDataURL('image/jpeg');
 						   			}
 							   }
-			  			 });
-					   	
+			  			 });					   	
 						});
 
+						//loaded[e.currentTarget["id"]]="1";
+						
 						$("#product-wrap").removeClass("hidden").addClass("shown");
 						$("#slider-wrap").removeClass("shown").addClass("hidden");
+						$("#close").removeClass("hidden").addClass("shown");
+						
+						interval = window.setInterval(autosscroll,4000);
 			  }			  
 			
 			});
