@@ -117,13 +117,13 @@ body {
 .close {
 	height:20px;
 	width:100%;
-	float: right;
+	float: left;
 	z-index:11;
 	border:1px red;
 	top:0px;
 	left:0px;
 	position:absolute;
-	text-align: right;
+	text-align: left;
 }
 .closebtn {
 	width:20px;

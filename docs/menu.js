@@ -6,6 +6,13 @@ var wheight = 0;
 const poffsetw = 0;
 const poffsett = 0;
 const products = 7;
+var catimages = { "cat1" : "Colorful-Circle-Fractal.png",
+									"cat2" : "Colorful-Circle-Fractal.png",
+									"cat3" : "Colorful-Circle-Fractal.png",
+									"cat4" : "Colorful-Circle-Fractal.png",
+									"cat5" : "Colorful-Circle-Fractal.png",
+									"cat6" : "Colorful-Circle-Fractal.png",
+ }
 var categories  = { "cat1" : [ "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg", "fashion-09.jpg", "fashion-05-726x1024.jpg","fashion-10.jpg", "fashion-11.jpg", "fasion-13.jpg" ],
 "cat2" : [ "fashion-05-726x1024.jpg","fashion-10.jpg", "fashion-11.jpg", "fasion-13.jpg","fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg", "fashion-09.jpg" ],
 "cat3" : [ "fashion-10.jpg", "fashion-11.jpg", "fasion-13.jpg", "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg", "fashion-09.jpg", "fashion-05-726x1024.jpg" ],
@@ -13,13 +20,7 @@ var categories  = { "cat1" : [ "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg"
 "cat5" : [ "fasion-15.jpg", "fasion-14.jpg","fashion-02.jpg", "fashion-09.jpg", "fashion-05-726x1024.jpg","fashion-10.jpg", "fashion-11.jpg", "fasion-13.jpg" ],
 "cat6" : [ "fashion-11.jpg", "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg", "fashion-09.jpg", "fashion-05-726x1024.jpg","fashion-10.jpg","fasion-13.jpg" ]
  };
-var loaded  = { "cat1" : "0" ,
-"cat2" : "0" ,
-"cat3" : "0" ,
-"cat4" : "0" ,
-"cat5" : "0" ,
-"cat6" : "0" 
- };
+
 var interval = 0; 
 let xDown, yDown, xpDown, ypDown, xsDown, ysDown;
 							 
@@ -237,43 +238,17 @@ $( document ).ready(function() {
 		  			for (var i = 0; i < categories[e.currentTarget["id"]].length; ++i) {
  							 console.log(categories[e.currentTarget["id"]][i]);
  							 $( "#productslider" ).append('<div class="product"><img src="'+categories[e.currentTarget["id"]][i]+'" class="img"></div>');
- 							 
- 							 /*
- 							 $('<img src="'+categories[e.currentTarget["id"]][i]+'" class="img">').load(function(){
-								   $w = $(this).width(); 
-								   $h = $(this).height();
-								   $(this).remove()
-								}).append($( "#productslider" ).wrap('<div class="product"></div>'));
-								*/
-								
-								//$( "#productslider" ).load('<img src="'+categories[e.currentTarget["id"]][i]+'" class="img">').wrap('<div class="product"></div>');
-								
-								//$('<img src="'+categories[e.currentTarget["id"]][i]+'"').load(function() {
-								//  $(this).width("1").height("1").appendTo('#productslider').wrap('<div class="product"></div>');
-								//});
-								
-								//$('<img src="'+categories[e.currentTarget["id"]][i]+'" class="img">').on( 'load', function() {
-								  // Handler for .load() called.
-								//  console.log("loaded");
-								//}).appendTo('#productslider').wrap('<div class="product"></div>');
-								
-							  // Step through each image in the DOM, clone it, attach an onload event
-							  // listener, then set its source to the source of the original image. When
-							  // that new image has loaded, fire the imageLoaded() callback.
-							  //$('img').each(function(idx, img) {
-							  //  $('<img>').on('load', imageLoaded).attr('src', $(img).attr('src'));
-							  //});							
-						}
+ 						}
 									
-							$(".product").on('touchstart mousedown', function(e){
+						$(".product").on('touchstart mousedown', function(e){
 
-								e.preventDefault();
+							e.preventDefault();
 
-								const firstTouch = getTouch(e);
+							const firstTouch = getTouch(e);
 
-								xpDown = firstTouch.clientX;
-								ypDown = firstTouch.clientY;
-							});			
+							xpDown = firstTouch.clientX;
+							ypDown = firstTouch.clientY;
+						});			
 			
 						$(".product").on('touchend mouseup', touchfinalp);
 			
@@ -353,6 +328,10 @@ $( document ).ready(function() {
 						});
 
 						//loaded[e.currentTarget["id"]]="1";
+						
+						$("#close" ).empty();
+						
+						$('#close').html("<img class='closebtn' src='"+ catimages[e.currentTarget["id"]] +"'/>");
 						
 						$("#product-wrap").removeClass("hidden").addClass("shown");
 						$("#slider-wrap").removeClass("shown").addClass("hidden");
