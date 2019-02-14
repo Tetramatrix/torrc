@@ -125,7 +125,17 @@ $( document ).ready(function() {
 			$(".slider-wrap").css('-ms-touch-action', 'none');
 			
 		} else {		
-						
+			
+			$(".product").on('touchstart mousedown', function(e){
+
+								e.preventDefault();
+
+								const firstTouch = getTouch(e);
+
+								xpDown = firstTouch.clientX;
+								ypDown = firstTouch.clientY;
+			});			
+							
 			$("body").on('touchstart mousedown', function(e){
 
 				e.preventDefault();
