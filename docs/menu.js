@@ -81,6 +81,8 @@ function touchfinalp(e) {
 			    	
 			      console.log('pleft');			      
 			      console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
+			      clearInterval(interval);
+			      interval = window.setInterval(autosscroll,20000);
 			      
 			      if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-products*wwidth)) {
 			       	$('#productslider').animate({
@@ -95,8 +97,12 @@ function touchfinalp(e) {
 			       }						 
 			    
 			    } else {
+			    	
 			      	console.log('pright');
 			        console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
+			        clearInterval(interval);
+			        interval = window.setInterval(autosscroll,20000);
+			        			        
 			        
 			        if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<0) {
 							 $('#productslider').animate({
@@ -210,6 +216,7 @@ $( document ).ready(function() {
 												
 			  		$( "#productslider" ).empty();
 			  		
+			  		/*
 			  		$("#product-wrap").position({
 						    my:        "left top",
 						    at:        "left top",
@@ -223,6 +230,7 @@ $( document ).ready(function() {
 						    of:        $("#product-wrap"),
 						    collision: "fit"
 						});
+						*/
 						
 						//$("#productslider").css({top: 0, left: 0});
 						//$("#product-wrap").css({top: 0, left: 0});
@@ -261,8 +269,8 @@ $( document ).ready(function() {
 					    
 						    if(img_height<div_height){
 						        //IMAGE IS SHORTER THAN CONTAINER HEIGHT - CENTER IT VERTICALLY
-						        var newMargin = (div_height-img_height)/2+'px';
-						        $(item).css({'margin-top': newMargin });
+						        var newMarginT = (div_height-img_height)/2;
+						        //$(item).css({'margin-top': newMargin });
 						    }
 						    /*else if(img_height>div_height){
 						        //IMAGE IS GREATER THAN CONTAINER HEIGHT - REDUCE HEIGHT TO CONTAINER MAX - SET WIDTH TO AUTO  
@@ -301,9 +309,9 @@ $( document ).ready(function() {
 									  ctx.fillStyle = 'white';
 										ctx.fillRect(0,0,canvas.width, canvas.height);
 										var newMarginL = (div_width-$(item).width())/2+'px';
-										var newMarginT = (div_height-img_height)/2;
+										//var newMarginT = (div_height-img_height)/2;
 
-										ctx.drawImage(item,0,0,div_width+poffsetw,img_height,0,0,div_width,img_height);
+										ctx.drawImage(item,0,0,div_width+poffsetw,img_height,0,newMarginT,div_width,img_height);
 										console.log(canvas.toDataURL('image/jpeg'));
 										item.src = canvas.toDataURL('image/jpeg');
 								   }
@@ -320,9 +328,9 @@ $( document ).ready(function() {
 											ctx.fillRect(0,0,canvas.width, canvas.height);
 											
 											var newMarginL = (div_width-$(item).width())/2;
-											var newMarginT = (div_height-img_height)/2;
+											//var newMarginT = (div_height-img_height)/2;
 											
-											ctx.drawImage(item,0,0,div_width+poffsetw,img_height,newMarginL,0,div_width,img_height);
+											ctx.drawImage(item,0,0,div_width+poffsetw,img_height,newMarginL,newMarginT,div_width,img_height);
 											console.log(canvas.toDataURL('image/jpeg'));
 											item.src = canvas.toDataURL('image/jpeg');
 						   			}
