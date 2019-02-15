@@ -53,7 +53,7 @@ body {
 }
 
 .slider {
-	width: 1000px;
+  width: 520px;  
   height: 105px;
   margin:0px;
   padding:0px;
@@ -118,7 +118,7 @@ body {
 }
 
 .close {
-	height:20px;
+	height:90px;
 	width:100%;
 	float: left;
 	z-index:202;
@@ -128,7 +128,7 @@ body {
 	text-align: left;
 }
 .closebtn {
-	width:20px;
+	width:90px;
 	position:relative;
 }
 

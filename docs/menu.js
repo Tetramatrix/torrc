@@ -101,8 +101,7 @@ function touchfinalp(e) {
 			      	console.log('pright');
 			        console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
 			        clearInterval(interval);
-			        interval = window.setInterval(autosscroll,20000);
-			        			        
+			        interval = window.setInterval(autosscroll,20000);			        			        
 			        
 			        if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<0) {
 							 $('#productslider').animate({
@@ -352,6 +351,7 @@ $( document ).ready(function() {
 						$("#close").removeClass("hidden").addClass("shown");
 						$("#main-header").removeClass("shown").addClass("hidden");
             $("#main-footer").removeClass("shown").addClass("hidden");
+            clearInterval(interval);
 						interval = window.setInterval(autosscroll,4000);
 			  }			  
 			
