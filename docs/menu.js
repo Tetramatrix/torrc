@@ -2,7 +2,7 @@
 // you can use the value relative to screen size: window.innerWidth * .1
 const offset = 100;
 const wwidth = $(window).width();
-var wheight = 0;
+var wheight = $(window).height();;
 const poffsetw = 0;
 const poffsett = 0;
 const products = 7;
@@ -150,7 +150,7 @@ function touchfinalp(e) {
 $( document ).ready(function() {
 	
     console.log( "ready!" );
-		wheight = $('#imenu').height();
+		//wheight = $('#imenu').height();
 		
 		if (navigator.maxTouchPoints==0) {
 			
@@ -279,6 +279,7 @@ $( document ).ready(function() {
 								    canvas.height=div_height;
 								    ctx = canvas.getContext('2d');
 								    //Draw Canvas Fill mode
+								    ctx.imageSmoothingEnabled = false;
 									  ctx.fillStyle = 'white';
 										ctx.fillRect(0,0,canvas.width, canvas.height);
 										var newMarginL = Math.round(($(item).width()-div_width)/2);
@@ -296,6 +297,7 @@ $( document ).ready(function() {
 								    canvas.height=div_height;
 								    ctx = canvas.getContext('2d');
 								    //Draw Canvas Fill mode
+								    ctx.imageSmoothingEnabled = false;
 									  ctx.fillStyle = 'white';
 										ctx.fillRect(0,0,canvas.width, canvas.height);
 										var newMarginL = (div_width-$(item).width())/2+'px';
@@ -313,6 +315,7 @@ $( document ).ready(function() {
 									    ctx = canvas.getContext('2d');
 									    
 									      //Draw Canvas Fill mode
+									    ctx.imageSmoothingEnabled = false;
 										  ctx.fillStyle = 'white';
 											ctx.fillRect(0,0,canvas.width, canvas.height);
 											
@@ -342,6 +345,5 @@ $( document ).ready(function() {
 			
 			});
 		}
-
 });
 
