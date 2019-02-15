@@ -88,6 +88,7 @@ body {
   left: 0; 
   right: 0; 
   bottom: 0;
+  z-index:200;
 }
 
 .product-wrap::-webkit-scrollbar { 
@@ -120,7 +121,7 @@ body {
 	height:20px;
 	width:100%;
 	float: left;
-	z-index:11;
+	z-index:202;
 	top:0px;
 	left:0px;
 	position:fixed;

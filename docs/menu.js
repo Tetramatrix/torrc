@@ -1,8 +1,8 @@
 // at least 100 px are a swipe
 // you can use the value relative to screen size: window.innerWidth * .1
 const offset = 100;
-const wwidth = $(window).width();
-var wheight = $(window).height();;
+var wwidth = 0;
+var wheight = 0;
 const poffsetw = 0;
 const poffsett = 0;
 const products = 7;
@@ -142,7 +142,9 @@ function touchfinalp(e) {
 		    								$(this).removeAttr('style');
 		    								$("#product-wrap").removeClass("shown").addClass("hidden"); 	
 		    								$("#slider-wrap").removeClass("hidden").addClass("shown");
-		    								$("#close").removeClass("shown").addClass("hidden");										 										
+		    								$("#close").removeClass("shown").addClass("hidden");			
+		    								$("#main-header").removeClass("hidden").addClass("shown");
+											  $("#main-footer").removeClass("hidden").addClass("shown");							 										
 		 								 });
 					    }
 			  }
@@ -156,7 +158,8 @@ function touchfinalp(e) {
 $( document ).ready(function() {
 	
     console.log( "ready!" );
-		//wheight = $('#imenu').height();
+		wwidth = $(window).width();
+		wheight = $(window).height();
 		
 		if (navigator.maxTouchPoints==0) {
 			
@@ -347,7 +350,8 @@ $( document ).ready(function() {
 						$("#product-wrap").removeClass("hidden").addClass("shown");
 						$("#slider-wrap").removeClass("shown").addClass("hidden");
 						$("#close").removeClass("hidden").addClass("shown");
-						
+						$("#main-header").removeClass("shown").addClass("hidden");
+            $("#main-footer").removeClass("shown").addClass("hidden");
 						interval = window.setInterval(autosscroll,4000);
 			  }			  
 			
