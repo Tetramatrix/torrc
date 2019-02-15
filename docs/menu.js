@@ -23,9 +23,31 @@ var categories  = { "cat1" : [ "fasion-14.jpg","fasion-15.jpg", "fashion-02.jpg"
 
 var interval = 0; 
 let xDown, yDown, xpDown, ypDown, xsDown, ysDown;
-							 
-function autosscroll() {
+
+function autoscrollp() {
+	 clearInterval(interval);
+	 interval = window.setInterval(autoscroll,4000);
+	 
+	 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-products*wwidth)) {
+	 	$('#productslider').animate({
+		 'marginLeft' : "-="+wwidth //moves left
+		}, 500, function () {
+				 if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<=(-products*wwidth)) {
+			  	// Animation complete.
+			  	//alert("test");
+			  	$('#productslider').removeAttr('style');
+			  }
+			});	
+ 	}
+ 	if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>0) {
+  	//alert("test");
+  	$('#productslider').removeAttr('style');
+  }
+}
+
+function autoscroll() {
 	console.log("autoscroll");
+						
 	if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-products*wwidth)) {
 	 	$('#productslider').animate({
 		 'marginLeft' : "-="+wwidth //moves left
@@ -82,7 +104,7 @@ function touchfinalp(e) {
 			      console.log('pleft');			      
 			      console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
 			      clearInterval(interval);
-			      interval = window.setInterval(autosscroll,20000);
+			      interval = window.setInterval(autoscrollp,20000);
 			      
 			      if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))>(-products*wwidth)) {
 			       	$('#productslider').animate({
@@ -101,7 +123,7 @@ function touchfinalp(e) {
 			      	console.log('pright');
 			        console.log($('#productslider').position().left + parseInt($('#productslider').css('marginLeft')));
 			        clearInterval(interval);
-			        interval = window.setInterval(autosscroll,20000);			        			        
+			        interval = window.setInterval(autoscrollp,20000);			        			        
 			        
 			        if ($('#productslider').position().left + parseInt($('#productslider').css('marginLeft'))<0) {
 							 $('#productslider').animate({
@@ -352,7 +374,7 @@ $( document ).ready(function() {
 						$("#main-header").removeClass("shown").addClass("hidden");
             $("#main-footer").removeClass("shown").addClass("hidden");
             clearInterval(interval);
-						interval = window.setInterval(autosscroll,4000);
+						interval = window.setInterval(autoscroll,4000);
 			  }			  
 			
 			});
